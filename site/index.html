@@ -306,73 +306,12 @@
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div id="box" class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">item name <span>| <h2 id="namaBarang"></h2></span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>Stock</h6>
-                      <h6 id="qtys"></h6>
-                    </div>
-                  </div>
                 </div>
 
               </div>
             </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Price <span></span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 id="hargaBarang"></h6>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Revenue Card -->
-
-
         
           </div>
         </div><!-- End Left side columns -->
@@ -418,22 +357,47 @@
   <script>
       let databarang = []
       let pict = []
+      let count = 0
       
-      const nama = document.getElementById("namaBarang");
-      const harga = document.getElementById("hargaBarang");
-      const qty = document.getElementById("qtys");
+      const nama = document.getElementById("judul");
+      const foto = document.getElementById("image");
+      const boxs = document.getElementById("box")
         
         
       const indexss = async()=>{
           const response = await fetch("https://backendglints-production.up.railway.app/");
-          const data = await response.json();
-          databarang = data;
+          const photo = await response.json();
+          databarang = photo;
           console.log(databarang);
-          nama.innerText=databarang.data.namaBarang;
-          harga.innerText=databarang.data.harga;
-          qty.innerText=databarang.data.qty;
+          
+          databarang.data.items.forEach(e=> {
+            boxs.innerHTML += `
+            <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title"><h2>${e.title}</h2></span></h5>
+
+                  <div class="align-items-center">
+                    <div class="ps-3">
+                      <img id="" src="${e.media.m}" alt=""><br/>
+                      <p>publish at :</p>
+                      <p>${e.published}</p>
+                      <p>date taken :</p>
+                      <p>${e.date_taken}</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            `
+
+
+          });
       };
       indexss()
+
+      const countdata = ()=>{
+        
+      }
 
   </script>
 
